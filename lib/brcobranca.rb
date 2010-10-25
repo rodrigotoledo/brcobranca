@@ -5,6 +5,9 @@ require 'brcobranca/limpeza'
 require 'brcobranca/formatacao'
 require 'brcobranca/calculo_data'
 require 'brcobranca/currency'
+require 'brcobranca/retorno/base'
+require 'brcobranca/retorno/retorno_cbr643'
+require 'brcobranca/retorno/retorno_bradesco'
 
 begin
   require 'date'
@@ -108,5 +111,6 @@ module Brcobranca
   module Retorno
     autoload :Base,           'brcobranca/retorno/base'
     autoload :RetornoCbr643,  'brcobranca/retorno/retorno_cbr643'
+    autoload :RetornoCbr643,  'brcobranca/retorno/retorno_bradesco'
   end
 end
