@@ -30,7 +30,7 @@ module Brcobranca
         parse.field :juros_desconto,201..213
         parse.field :iof_desconto,214..226
         parse.field :valor_abatimento,227..239
-        parse.field :desconto_concedito,240..252
+        parse.field :desconto_concedido,240..252
         parse.field :valor_recebido,253..265
         parse.field :juros_mora,266..278
         parse.field :outros_recebimento,279..291

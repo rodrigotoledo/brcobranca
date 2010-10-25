@@ -25,7 +25,7 @@ module Brcobranca
       attr_accessor :juros_desconto
       attr_accessor :iof_desconto
       attr_accessor :valor_abatimento
-      attr_accessor :desconto_concedito
+      attr_accessor :desconto_concedido
       attr_accessor :valor_recebido
       attr_accessor :juros_mora
       attr_accessor :outros_recebimento

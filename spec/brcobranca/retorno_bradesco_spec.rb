@@ -9,49 +9,24 @@ describe Brcobranca::Retorno::RetornoBradesco do
   
   
   
-  it "Transforma arquivo de retorno em objetos de retorno" do
-    pagamentos = Brcobranca::Retorno::RetornoCbr643.load_lines(@arquivo)
-#    pagamentos.first.sequencial.should eql("000001")
-#    pagamentos.first.agencia_com_dv.should eql("CA")
-#    pagamentos.first.cedente_com_dv.should eql("33251")
-#    pagamentos.first.convenio.should eql("0002893")
-#    pagamentos.first.data_liquidacao.should eql("")
-#    pagamentos.first.data_credito.should eql("")
-#    pagamentos.first.valor_recebido.should eql("")
-#    pagamentos.first.nosso_numero.should eql("OSSENSE DO AL001B")
+  it "Confere informacoes do cabecalho" do
+    pagamentos = Brcobranca::Retorno::RetornoBradesco.load_lines(@arquivo)
+    cabecalho = pagamentos.first
+    cabecalho.sequencial.should eql("000001")
+    cabecalho.empresa_codigo.should eql("00000000000004244564")
+    cabecalho.data_credito.should eql("")
   end
 
-  it "Transforma arquivo de retorno em objetos de retorno excluindo a primeira linha com a opção :except" do
-    
+  it "Transforma arquivo de retorno em objetos com apenas titulos e rodape usando :except" do
+    pagamentos = Brcobranca::Retorno::RetornoBradesco.load_lines(@arquivo, {:except=> [1]})
+    titulo = pagamentos.first
+    titulo.sequencial.should eql("000002")
+    rodape = pagamentos.last
+    rodape.sequencial.to_i.should eql(pagamentos.size+1)
   end
 
-  it "Transforma arquivo de retorno em objetos de retorno excluindo a primeira linha com a opção :except e :length" do
-    
-  end
-
-  it "Transforma arquivo de retorno em objetos de retorno excluindo a primeira linha com a opção :except em regex" do
-    
-  end
-
-  it "Transforma arquivo de retorno em objetos de retorno excluindo a primeira linha com a opção :except em regex e :length" do
-    
-  end
-  
-  it "Retorna um trecho formatado como string" do
-  end
-  
-  it "Retorna um trecho formatado como inteiro" do
-  end
-  
-  it "Retorna um erro ao nao informar corretamente informacoes para a geracao de trecho" do
-  end
-  
-  it "Deve criar um arquivo de retorno sem passar parametros" do
-  end
-  
-  it "Deve criar um arquivo de retorno passando parametros" do
-  end
-  
-  it "Deve retornar uma excessao na geracao de arquivo de retorno por parametros incorretos" do
+  it "Confere valores recebidos de acordo com o valor exposto no rodape" do
+    pagamentos = Brcobranca::Retorno::RetornoBradesco.load_lines(@arquivo, {:except=> [1]})
+    pagamentos.last.valor_total_titulos.to_i.should eql(2838288)
   end
 end
